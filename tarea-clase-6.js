@@ -14,22 +14,37 @@ let min = 0;
 let promedio = 0;
 
 function crearNodos(cant) {
-    const nodoDiv = document.querySelector('div');
     
     for (let i=0; i < cant; i++) {
 
         const nuevoLavel = document.createElement('label');
+        nuevoLavel.className = 'laveles';
         const textoLavel = document.createTextNode(`Edad integrante n° ${i+1}`);
         nuevoLavel.appendChild(textoLavel);
         nodoDiv.appendChild(nuevoLavel);
 
         const nuevoInput = document.createElement('input');
+        nuevoInput.className = 'inputes';
         nuevoInput.placeholder = 'Ingresa la edad aquí';
         nodoDiv.appendChild(nuevoInput);
     }
 }
 
-function eliminarNodos() {
+function borrarLabelInputsAnteriores() {
+    const labels = document.querySelectorAll('label');
+    console.log(labels);
+    const inputs = document.querySelectorAll('input');
+    console.log(inputs);
+    
+    for (let i = 3; i < labels.length; i++) {
+        labels[i].remove();
+    }
+    for (let i = 1; i < inputs.length; i++) {
+        inputs[i].remove();
+    }
+}
+
+function eliminarLabelsInputs() {
 
     let elemento = document.querySelector('div');
     let parrafos = document.querySelector('p');
@@ -78,6 +93,8 @@ const botonIngreso = document.querySelector('#boton-ingresar');
 
 botonIngreso.onclick = function() {
 
+    borrarLabelInputsAnteriores();
+
     const cantidadFamilia = Number(document.querySelector('#cantidadFamiliares').value);
 
     crearNodos(cantidadFamilia);
@@ -90,7 +107,7 @@ botonLimpiar.onclick = function() {
 
     document.querySelector('#cantidadFamiliares').value = '';
 
-    eliminarNodos();
+    eliminarLabelsInputs();
 
 }
 
@@ -111,14 +128,9 @@ botonCalcular.onclick = function() {
     document.querySelector('#menor').innerText = `La menor edad es ${min}`;
     document.querySelector('#promedio').innerText = `El promedio de edades es ${promedio}`;
 
+    document.querySelector('#cantidadFamiliares').value = '';
+
 }
 
-/*
-TAREA:
-Crear una interfaz que permita agregar ó quitar (botones agregar y quitar) inputs+labels para 
-completar el salario anual de cada integrante de la familia que trabaje.
-Al hacer click en "calcular", mostrar en un elemento pre-existente el mayor salario anual, 
-menor salario anual, salario anual promedio y salario mensual promedio.
 
-Punto bonus: si hay inputs vacíos, ignorarlos en el cálculo (no contarlos como 0).
-*/
+
